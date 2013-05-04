@@ -33,6 +33,7 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
 </ul>
 
 
@@ -58,26 +59,28 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#Format">Format&nbsp;(format)</a></td>
+	<td class="name" nowrap><a href="#Format">Format&nbsp;(format [, ...])</a></td>
 	<td class="summary">Alias for string.format, functionality is extended for server plugins</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#Puts">Puts&nbsp;(format)</a></td>
+	<td class="name" nowrap><a href="#Puts">Puts&nbsp;(format, ...)</a></td>
 	<td class="summary">Prints a string to the server console prepended with the plugins name</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#Now">Now&nbsp;()</a></td>
-	<td class="summary">Alias for Shared.GetTime()</td>
+	<td class="name" nowrap><a href="#GetTime">GetTime&nbsp;()</a></td>
+	<td class="summary">Gets the number of seconds since the server started or changed map.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetSystemTime">GetSystemTime&nbsp;()</a></td>
+	<td class="summary">Gets the current system time in seconds</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Requires">Requires&nbsp;(...)</a></td>
-	<td class="summary">Requires other plugins to be loaded before initializing this plugin
- Requires other plugins to load before loading this plugin.</td>
+	<td class="summary">Requires other plugins to be loaded before initializing this plugin.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#RegPluginLibrary">RegPluginLibrary&nbsp;(name)</a></td>
-	<td class="summary">Registers a global name for the plugin
- Must be used in the plugin body.</td>
+	<td class="summary">Registers a global name that can be used to reference this plugin from other plugins.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#NetworkMessageField">NetworkMessageField&nbsp;(message_name, name, type, default_value)</a></td>
@@ -85,43 +88,35 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#NetworkMessage">NetworkMessage&nbsp;(message_name, func)</a></td>
-	<td class="summary">Registers or extends a network message
- The default_value is used when sending a message missing the field,
- it will be used even if the server plugin is unloaded at runtime</td>
+	<td class="summary">Registers or extends a network message.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#HookFunctionPre">HookFunctionPre&nbsp;(method_name, callback)</a></td>
-	<td class="summary">Pre-hooks a function and calls the callback every time the function is about to be called
- Varargs are passed to the callback as a table.</td>
+	<td class="summary">Pre-hooks a function and calls the callback every time the function is about to be called.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#HookFunction">HookFunction&nbsp;(method_name, callback)</a></td>
-	<td class="summary">Post-hooks a function and calls the callback every time the function has been called
- Varargs are passed to the callback as a table.</td>
+	<td class="summary">Post-hooks a function and calls the callback every time the function has been called.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#HookGamerulesFunctionPre">HookGamerulesFunctionPre&nbsp;(method_name, callback)</a></td>
-	<td class="summary">Pre-hooks a Gamerules function and calls the callback every time the function is about to be called
- Varargs are passed to the callback as a table.</td>
+	<td class="summary">Pre-hooks a Gamerules function and calls the callback every time the function is about to be called.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#HookGamerulesFunction">HookGamerulesFunction&nbsp;(method_name, callback)</a></td>
-	<td class="summary">Post-hooks a Gamerules function and calls the callback every time the function has been called
- Varargs are passed to the callback as a table.</td>
+	<td class="summary">Post-hooks a Gamerules function and calls the callback every time the function has been called.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#HookNS2GamerulesFunctionPre">HookNS2GamerulesFunctionPre&nbsp;(method_name, callback)</a></td>
-	<td class="summary">Pre-hooks a NS2Gamerules function and calls the callback every time the function is about to be called
- Varargs are passed to the callback as a table.</td>
+	<td class="summary">Pre-hooks a NS2Gamerules function and calls the callback every time the function is about to be called.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#HookNS2GamerulesFunction">HookNS2GamerulesFunction&nbsp;(method_name, callback)</a></td>
-	<td class="summary">Post-hooks a NS2Gamerules function and calls the callback every time the function has been called
- Varargs are passed to the callback as a table.</td>
+	<td class="summary">Post-hooks a NS2Gamerules function and calls the callback every time the function has been called.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#InjectIntoScope">InjectIntoScope&nbsp;(..., function)</a></td>
-	<td class="summary">Injects a function into the scope of other functions so that you can use locals they reference</td>
+	<td class="summary">Injects a function into the scope of other functions so that you can use locals they reference.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#HookNetworkMessage">HookNetworkMessage&nbsp;(message_name, callback)</a></td>
@@ -129,11 +124,22 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#SendNetworkMessage">SendNetworkMessage&nbsp;( [target], message_name, message)</a></td>
-	<td class="summary">Sends a network message to one or all connected players</td>
+	<td class="summary">Sends a network message to one or all connected players.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#RespondToNetworkMessage">RespondToNetworkMessage&nbsp;(message_name, callback)</a></td>
-	<td class="summary">Hooks a network message and responds with the same message</td>
+	<td class="summary">Hooks a network message and responds with the same message.</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#SM">SM</a></td>
+	<td class="summary">Shortcut to reference SparkMod core</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self">self</a></td>
+	<td class="summary">Reference to this plugin</td>
 	</tr>
 </table>
 
@@ -145,7 +151,7 @@
     <dl class="function">
     <dt>
     <a name = "Format"></a>
-    <strong>Format&nbsp;(format)</strong>
+    <strong>Format&nbsp;(format [, ...])</strong>
     </dt>
     <dd>
     Alias for string.format, functionality is extended for server plugins
@@ -155,6 +161,8 @@
         <li><span class="parameter">format</span>
             <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          the string to format</li>
+        <li><span class="parameter">...</span>
+         any number of arguments to be formatted</li>
     </ul>
 
 
@@ -164,7 +172,7 @@
 </dd>
     <dt>
     <a name = "Puts"></a>
-    <strong>Puts&nbsp;(format)</strong>
+    <strong>Puts&nbsp;(format, ...)</strong>
     </dt>
     <dd>
     Prints a string to the server console prepended with the plugins name
@@ -174,6 +182,8 @@
         <li><span class="parameter">format</span>
             <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          the string to format</li>
+        <li><span class="parameter">...</span>
+         any number of arguments to be formatted</li>
     </ul>
 
 
@@ -182,13 +192,39 @@
 
 </dd>
     <dt>
-    <a name = "Now"></a>
-    <strong>Now&nbsp;()</strong>
+    <a name = "GetTime"></a>
+    <strong>GetTime&nbsp;()</strong>
     </dt>
     <dd>
-    Alias for Shared.GetTime()
+    Gets the number of seconds since the server started or changed map.
+ The value returned is a high precision float.
 
 
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><span class="type">number</span></span>
+        the current system timestamp in seconds
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetSystemTime"></a>
+    <strong>GetSystemTime&nbsp;()</strong>
+    </dt>
+    <dd>
+    Gets the current system time in seconds
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><span class="type">number</span></span>
+        the current system timestamp in seconds
+    </ol>
 
 
 
@@ -199,20 +235,24 @@
     <strong>Requires&nbsp;(...)</strong>
     </dt>
     <dd>
-    Requires other plugins to be loaded before initializing this plugin
- Requires other plugins to load before loading this plugin.  Must be used in the plugin
- body. In the case of circular dependencies, plugins will be loaded before OnLoaded is
- called in this plugin but OnLoaded may not have yet been called in the dependent plugins.
+    Requires other plugins to be loaded before initializing this plugin.
+ Must be used in the plugin body. In the case of circular dependencies, plugins will be loaded before
+ OnLoaded is called in this plugin but OnLoaded may not have yet been called in the dependent plugins.
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">...</span>
-        </li>
+         any number of other plugins names</li>
     </ul>
 
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">Requires <span class="string">"map_vote"</span>
+Requires(<span class="string">"map_vote"</span>, <span class="string">"rtv"</span>)</pre>
+    </ul>
 
 </dd>
     <dt>
@@ -220,8 +260,8 @@
     <strong>RegPluginLibrary&nbsp;(name)</strong>
     </dt>
     <dd>
-    Registers a global name for the plugin
- Must be used in the plugin body.  You can also use `library_name = "YourPluginName"`
+    Registers a global name that can be used to reference this plugin from other plugins.
+ Must be used in the plugin body.
 
     <h3>Parameters:</h3>
     <ul>
@@ -233,6 +273,12 @@
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"> RegPluginLibrary(<span class="string">"YourPluginName"</span>)
+ <span class="comment">-- You can also set library_name
+</span> library_name = <span class="string">"YourPluginName"</span></pre>
+    </ul>
 
 </dd>
     <dt>
@@ -267,7 +313,7 @@
     <strong>NetworkMessage&nbsp;(message_name, func)</strong>
     </dt>
     <dd>
-    Registers or extends a network message
+    Registers or extends a network message.
  The default_value is used when sending a message missing the field,
  it will be used even if the server plugin is unloaded at runtime
 
@@ -298,8 +344,8 @@
     <strong>HookFunctionPre&nbsp;(method_name, callback)</strong>
     </dt>
     <dd>
-    Pre-hooks a function and calls the callback every time the function is about to be called
- Varargs are passed to the callback as a table.  Other plugins can use Pre/post hook forwards to hook this kind of hook.
+    Pre-hooks a function and calls the callback every time the function is about to be called.
+ Varargs are passed to the callback as a table. Other plugins can use Pre/post hook forwards to hook this kind of hook.
 
     <h3>Parameters:</h3>
     <ul>
@@ -327,8 +373,8 @@
     <strong>HookFunction&nbsp;(method_name, callback)</strong>
     </dt>
     <dd>
-    Post-hooks a function and calls the callback every time the function has been called
- Varargs are passed to the callback as a table.  Other plugins can use Pre/post hook forwards to hook this kind of hook.
+    Post-hooks a function and calls the callback every time the function has been called.
+ Varargs are passed to the callback as a table. Other plugins can use Pre/post hook forwards to hook this kind of hook.
 
     <h3>Parameters:</h3>
     <ul>
@@ -356,8 +402,8 @@
     <strong>HookGamerulesFunctionPre&nbsp;(method_name, callback)</strong>
     </dt>
     <dd>
-    Pre-hooks a Gamerules function and calls the callback every time the function is about to be called
- Varargs are passed to the callback as a table.  Other plugins can use Pre/post hook forwards to hook this kind of hook.
+    Pre-hooks a Gamerules function and calls the callback every time the function is about to be called.
+ Varargs are passed to the callback as a table. Other plugins can use Pre/post hook forwards to hook this kind of hook.
 
     <h3>Parameters:</h3>
     <ul>
@@ -379,8 +425,8 @@
     <strong>HookGamerulesFunction&nbsp;(method_name, callback)</strong>
     </dt>
     <dd>
-    Post-hooks a Gamerules function and calls the callback every time the function has been called
- Varargs are passed to the callback as a table.  Other plugins can use Pre/post hook forwards to hook this kind of hook.
+    Post-hooks a Gamerules function and calls the callback every time the function has been called.
+ Varargs are passed to the callback as a table. Other plugins can use Pre/post hook forwards to hook this kind of hook.
 
     <h3>Parameters:</h3>
     <ul>
@@ -402,8 +448,8 @@
     <strong>HookNS2GamerulesFunctionPre&nbsp;(method_name, callback)</strong>
     </dt>
     <dd>
-    Pre-hooks a NS2Gamerules function and calls the callback every time the function is about to be called
- Varargs are passed to the callback as a table.  Other plugins can use Pre/post hook forwards to hook this kind of hook.
+    Pre-hooks a NS2Gamerules function and calls the callback every time the function is about to be called.
+ Varargs are passed to the callback as a table. Other plugins can use Pre/post hook forwards to hook this kind of hook.
 
     <h3>Parameters:</h3>
     <ul>
@@ -425,8 +471,8 @@
     <strong>HookNS2GamerulesFunction&nbsp;(method_name, callback)</strong>
     </dt>
     <dd>
-    Post-hooks a NS2Gamerules function and calls the callback every time the function has been called
- Varargs are passed to the callback as a table.  Other plugins can use Pre/post hook forwards to hook this kind of hook.
+    Post-hooks a NS2Gamerules function and calls the callback every time the function has been called.
+ Varargs are passed to the callback as a table. Other plugins can use Pre/post hook forwards to hook this kind of hook.
 
     <h3>Parameters:</h3>
     <ul>
@@ -448,7 +494,7 @@
     <strong>InjectIntoScope&nbsp;(..., function)</strong>
     </dt>
     <dd>
-    Injects a function into the scope of other functions so that you can use locals they reference
+    Injects a function into the scope of other functions so that you can use locals they reference.
 
     <h3>Parameters:</h3>
     <ul>
@@ -491,7 +537,7 @@
     <strong>SendNetworkMessage&nbsp;( [target], message_name, message)</strong>
     </dt>
     <dd>
-    Sends a network message to one or all connected players
+    Sends a network message to one or all connected players.
 
     <h3>Parameters:</h3>
     <ul>
@@ -516,7 +562,7 @@
     <strong>RespondToNetworkMessage&nbsp;(message_name, callback)</strong>
     </dt>
     <dd>
-    Hooks a network message and responds with the same message
+    Hooks a network message and responds with the same message.
 
     <h3>Parameters:</h3>
     <ul>
@@ -527,6 +573,35 @@
             <span class="types"><span class="type">func</span></span>
          a function that is passed the received message and returns the response message</li>
     </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Fields"></a>Fields</h2>
+    <dl class="function">
+    <dt>
+    <a name = "SM"></a>
+    <strong>SM</strong>
+    </dt>
+    <dd>
+    Shortcut to reference SparkMod core
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self"></a>
+    <strong>self</strong>
+    </dt>
+    <dd>
+    Reference to this plugin
+
 
 
 
