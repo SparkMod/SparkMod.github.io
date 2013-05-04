@@ -197,7 +197,7 @@ table.index td { text-align: left; vertical-align: top; }
     margin-left: 18em;
     padding: 1em;
     min-width: 700px;
-    max-width: 940px;
+    max-width: 840px;
     width: 50%;
     border-left: 2px solid #cccccc;
     border-right: 2px solid #cccccc;
@@ -271,7 +271,7 @@ table.function_list td {
     border-style: solid;
     border-color: #cccccc;
 }
-table.function_list td.name { background-color: #f0f0f0; ; min-width: 200px; }
+table.function_list td.name { background-color: #f0f0f0; ; min-width: 200px; font-size: 0.93em; }
 table.function_list td.summary { width: 100%; }
 
 dl.table dt, dl.function dt {border-top: 1px solid #ccc; padding-top: 1em;}

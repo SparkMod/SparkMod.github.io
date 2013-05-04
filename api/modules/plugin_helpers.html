@@ -123,9 +123,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#FindPlayerMatchingName">FindPlayerMatchingName&nbsp;(partial_name, allow_none)</a></td>
-	<td class="summary">Find a single player matching a partial name or returns with an error message
- Finds a single player matching the given partial name, replies with an error
- message and stops processing command if there are multiple or no matches.</td>
+	<td class="summary">Find a single connected player matching a partial name or returns with an error message.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#GetClient">GetClient&nbsp;(target)</a></td>
@@ -600,9 +598,9 @@
     <strong>FindPlayerMatchingName&nbsp;(partial_name, allow_none)</strong>
     </dt>
     <dd>
-    Find a single player matching a partial name or returns with an error message
- Finds a single player matching the given partial name, replies with an error
- message and stops processing command if there are multiple or no matches.
+    Find a single connected player matching a partial name or returns with an error message.
+ If there are are multiple or no matches, an error message will be sent to
+ the client and the command will not be processed any further.
 
     <h3>Parameters:</h3>
     <ul>
