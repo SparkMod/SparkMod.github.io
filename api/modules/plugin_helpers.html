@@ -1,0 +1,1333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>SparkMod Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>SparkMod</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul>
+  <li><a href="../modules/plugin_base.html">plugin_base</a></li>
+  <li><a href="../modules/plugin_clients.html">plugin_clients</a></li>
+  <li><strong>plugin_helpers</strong></li>
+  <li><a href="../modules/plugin_scheduler.html">plugin_scheduler</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>plugin_helpers</code></h1>
+
+<p>SparkMod server plugin helpers.</p>
+<p>
+ These helpers are only available to server plugins</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Format">Format&nbsp;(format [, ...])</a></td>
+	<td class="summary">Formats a string, supports %t for context based translations</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PrintToChatAll">PrintToChatAll&nbsp;(format [, ...])</a></td>
+	<td class="summary">Send a chat message to all players</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PrintToChat">PrintToChat&nbsp;( [target], format [, ...])</a></td>
+	<td class="summary">Send a private chat message to a client or player</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#SendToAdmin">SendToAdmin&nbsp;(client, format, ...)</a></td>
+	<td class="summary">Send a private message to a server admins console</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#SendReply">SendReply&nbsp;(format [, ...])</a></td>
+	<td class="summary">Send a reply from a command or chat message callback</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#SendError">SendError&nbsp;(format [, ...])</a></td>
+	<td class="summary">Send a reply from a command or chat message callback and stop processing the command</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetCmdArg">GetCmdArg&nbsp;(arg_number)</a></td>
+	<td class="summary">Gets a specific argument from a command or chat message callback</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetCmdArgString">GetCmdArgString&nbsp;()</a></td>
+	<td class="summary">Gets the full argument string from a command or chat message callback</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetPlayers">GetPlayers&nbsp;()</a></td>
+	<td class="summary">Get a table of players</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#EachPlayer">EachPlayer&nbsp;(callback)</a></td>
+	<td class="summary">Loops through each player</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#EachRealPlayer">EachRealPlayer&nbsp;(callback)</a></td>
+	<td class="summary">Loops through each real player</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#EachClient">EachClient&nbsp;(callback)</a></td>
+	<td class="summary">Loops through each client</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#EachRealClient">EachRealClient&nbsp;(callback)</a></td>
+	<td class="summary">Loops through each real client</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetClientFromSteamId">GetClientFromSteamId&nbsp;(steam_id)</a></td>
+	<td class="summary">Finds a client matching the given steam id</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetPlayerFromSteamId">GetPlayerFromSteamId&nbsp;(steam_id)</a></td>
+	<td class="summary">Finds a player matching the given steam id</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetPlayersMatchingName">GetPlayersMatchingName&nbsp;(partial_name)</a></td>
+	<td class="summary">Find all players whos name includes the partial name</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#FindPlayerMatchingName">FindPlayerMatchingName&nbsp;(partial_name, allow_none)</a></td>
+	<td class="summary">Find a single player matching a partial name or returns with an error message
+ Finds a single player matching the given partial name, replies with an error
+ message and stops processing command if there are multiple or no matches.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetClient">GetClient&nbsp;(target)</a></td>
+	<td class="summary">Returns a client for a client or player</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetPlayer">GetPlayer&nbsp;(target)</a></td>
+	<td class="summary">Returns a player for a client or player</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetClientLanguage">GetClientLanguage&nbsp;(client)</a></td>
+	<td class="summary">Gets the current language set for a client, defaults to the default language for the server</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#IsClientEnabled">IsClientEnabled&nbsp;(client)</a></td>
+	<td class="summary">Checks if a client is running SparkMod client-side</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetClientTeam">GetClientTeam&nbsp;(target)</a></td>
+	<td class="summary">Returns the targets current team index</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetTeamName">GetTeamName&nbsp;(team_index)</a></td>
+	<td class="summary">Returns a lower case NS2 team name for the given team index</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#JoinTeam">JoinTeam&nbsp;(target, team_number)</a></td>
+	<td class="summary">Joins a target to a team
+ Joins a player to a team and sets clients[client].moving_user_to_team to the
+ team number so that you can allow the join if you are using an OnJoinTeam forward</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#JoinRandomTeam">JoinRandomTeam&nbsp;(target)</a></td>
+	<td class="summary">Joins a target to a random team</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetClientOrigin">GetClientOrigin&nbsp;(target)</a></td>
+	<td class="summary">Gets a target current origin</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetClientTechId">GetClientTechId&nbsp;(target)</a></td>
+	<td class="summary">Gets a clients tech id</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#IsClientInGame">IsClientInGame&nbsp;(target)</a></td>
+	<td class="summary">Checks if the target is still on the server</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#IsClientAlive">IsClientAlive&nbsp;(target)</a></td>
+	<td class="summary">Checks if a player is alive</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#IsPlayerAlive">IsPlayerAlive&nbsp;(target)</a></td>
+	<td class="summary">SourceMod compatible alias for IsClientAlive</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#RespawnClientNearby">RespawnClientNearby&nbsp;(target [, max_range=8])</a></td>
+	<td class="summary">Respawns an alive target in a nearby location which is not near a resource point</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ClientCommand">ClientCommand&nbsp;(target, format [, ...])</a></td>
+	<td class="summary">Executes a console command on a client</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#SetUserIdCookie">SetUserIdCookie&nbsp;(user_id, cookie_name, value)</a></td>
+	<td class="summary">Sets a cookie for a user from a steam id</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#SetClientCookie">SetClientCookie&nbsp;(client, cookie_name, value)</a></td>
+	<td class="summary">Sets a cookie for a connected client</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetUserIdRawCookie">GetUserIdRawCookie&nbsp;(user_id, cookie_name)</a></td>
+	<td class="summary">Gets a raw cookie table for a specific cookie beloning to a user from a steam id</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetUserIdCookie">GetUserIdCookie&nbsp;(user_id, cookie_name)</a></td>
+	<td class="summary">Gets a cookie value for a user from a steam id</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetClientCookie">GetClientCookie&nbsp;(client, cookie_name)</a></td>
+	<td class="summary">Gets a cookie value for a connected client</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetClientCookieTime">GetClientCookieTime&nbsp;(client, cookie_name)</a></td>
+	<td class="summary">Gets the time a cookies value was last changed for a user from a steam id</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#CommandAlias">CommandAlias&nbsp;(command_name, alias_name)</a></td>
+	<td class="summary">Registers an alias for a registered client or admin command</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PrintToScreen">PrintToScreen&nbsp;(target, x, y, text, duration, color [, tag])</a></td>
+	<td class="summary">Prints a text message at a specific location of a targets screen</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PrintToScreenAll">PrintToScreenAll&nbsp;(x, y, text, duration, color [, tag])</a></td>
+	<td class="summary">Prints a text message at a specific location of all connected players screens</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PrintCenterText">PrintCenterText&nbsp;(target, format [, ...])</a></td>
+	<td class="summary">Prints a text message to the center of a targets screen</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PrintCenterTextAll">PrintCenterTextAll&nbsp;(format [, ...])</a></td>
+	<td class="summary">Prints a text message to the center of all connected players screens</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ArgCount">ArgCount&nbsp;(...)</a></td>
+	<td class="summary">Counts the number of arguments given</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ArgString">ArgString&nbsp;(...)</a></td>
+	<td class="summary">Joins the arguments given together with spaces</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "Format"></a>
+    <strong>Format&nbsp;(format [, ...])</strong>
+    </dt>
+    <dd>
+    Formats a string, supports %t for context based translations
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">format</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         a string to be formatted</li>
+        <li><span class="parameter">...</span>
+         any arguments to be formatted</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PrintToChatAll"></a>
+    <strong>PrintToChatAll&nbsp;(format [, ...])</strong>
+    </dt>
+    <dd>
+    Send a chat message to all players
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">format</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         string to format before sending</li>
+        <li><span class="parameter">...</span>
+         any number of format arguments</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PrintToChat"></a>
+    <strong>PrintToChat&nbsp;( [target], format [, ...])</strong>
+    </dt>
+    <dd>
+    Send a private chat message to a client or player
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">ServerClient</span> or <span class="type">Player</span></span>
+         the target that the message will be sent to</li>
+        <li><span class="parameter">format</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         string to format before sending</li>
+        <li><span class="parameter">...</span>
+         any number of format arguments</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "SendToAdmin"></a>
+    <strong>SendToAdmin&nbsp;(client, format, ...)</strong>
+    </dt>
+    <dd>
+    Send a private message to a server admins console
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">client</span>
+            <span class="types"><span class="type">ServerClient</span></span>
+         the client to send the message to</li>
+        <li><span class="parameter">format</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         string to format before sending</li>
+        <li><span class="parameter">...</span>
+         any number of format arguments</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "SendReply"></a>
+    <strong>SendReply&nbsp;(format [, ...])</strong>
+    </dt>
+    <dd>
+    Send a reply from a command or chat message callback
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">format</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         string to format before sending</li>
+        <li><span class="parameter">...</span>
+         any number of format arguments</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "SendError"></a>
+    <strong>SendError&nbsp;(format [, ...])</strong>
+    </dt>
+    <dd>
+    Send a reply from a command or chat message callback and stop processing the command
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">format</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         string to format before sending</li>
+        <li><span class="parameter">...</span>
+         any number of format arguments</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetCmdArg"></a>
+    <strong>GetCmdArg&nbsp;(arg_number)</strong>
+    </dt>
+    <dd>
+    Gets a specific argument from a command or chat message callback
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">arg_number</span>
+            <span class="types"><span class="type">int</span></span>
+         argument number starting from 1</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        an argument that was entered after the command
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetCmdArgString"></a>
+    <strong>GetCmdArgString&nbsp;()</strong>
+    </dt>
+    <dd>
+    Gets the full argument string from a command or chat message callback
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        all arguments that were entered after the command
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetPlayers"></a>
+    <strong>GetPlayers&nbsp;()</strong>
+    </dt>
+    <dd>
+    Get a table of players
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        a table containing all Player entities
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "EachPlayer"></a>
+    <strong>EachPlayer&nbsp;(callback)</strong>
+    </dt>
+    <dd>
+    Loops through each player
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">func</span></span>
+         a callback which will be called for each player</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "EachRealPlayer"></a>
+    <strong>EachRealPlayer&nbsp;(callback)</strong>
+    </dt>
+    <dd>
+    Loops through each real player
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">func</span></span>
+         a callback which will be called for each real player</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "EachClient"></a>
+    <strong>EachClient&nbsp;(callback)</strong>
+    </dt>
+    <dd>
+    Loops through each client
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">func</span></span>
+         a callback which will be called for each client</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "EachRealClient"></a>
+    <strong>EachRealClient&nbsp;(callback)</strong>
+    </dt>
+    <dd>
+    Loops through each real client
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">func</span></span>
+         a callback which will be called for each real client</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetClientFromSteamId"></a>
+    <strong>GetClientFromSteamId&nbsp;(steam_id)</strong>
+    </dt>
+    <dd>
+    Finds a client matching the given steam id
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">steam_id</span>
+            <span class="types"><span class="type">int</span></span>
+         a steam id of a connected client</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><span class="type">ServerClient</span></span>
+        the connected client who the steam id belongs to
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetPlayerFromSteamId"></a>
+    <strong>GetPlayerFromSteamId&nbsp;(steam_id)</strong>
+    </dt>
+    <dd>
+    Finds a player matching the given steam id
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">steam_id</span>
+            <span class="types"><span class="type">int</span></span>
+         a steam id of a connected player</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><span class="type">ServerClient</span></span>
+        the connected player who the steam id belongs to
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetPlayersMatchingName"></a>
+    <strong>GetPlayersMatchingName&nbsp;(partial_name)</strong>
+    </dt>
+    <dd>
+    Find all players whos name includes the partial name
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">partial_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         a partial name of a connected player</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        all players whos names contain the partial name
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "FindPlayerMatchingName"></a>
+    <strong>FindPlayerMatchingName&nbsp;(partial_name, allow_none)</strong>
+    </dt>
+    <dd>
+    Find a single player matching a partial name or returns with an error message
+ Finds a single player matching the given partial name, replies with an error
+ message and stops processing command if there are multiple or no matches.
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">partial_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         a partial name of a connected player</li>
+        <li><span class="parameter">allow_none</span>
+            <span class="types"><span class="type">bool</span></span>
+         if true, return nil and continus processing the command if there are no matches</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetClient"></a>
+    <strong>GetClient&nbsp;(target)</strong>
+    </dt>
+    <dd>
+    Returns a client for a client or player
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">ServerClient</span> or <span class="type">Player</span></span>
+         the target client or player</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><span class="type">ServerClient</span></span>
+        the client associated with the target
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetPlayer"></a>
+    <strong>GetPlayer&nbsp;(target)</strong>
+    </dt>
+    <dd>
+    Returns a player for a client or player
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">ServerClient</span> or <span class="type">Player</span></span>
+         the target client or player</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><span class="type">Player</span></span>
+        the client associated with the target
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetClientLanguage"></a>
+    <strong>GetClientLanguage&nbsp;(client)</strong>
+    </dt>
+    <dd>
+    Gets the current language set for a client, defaults to the default language for the server
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">client</span>
+            <span class="types"><span class="type">ServerClient</span></span>
+         the client whos language you want to get</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        the language the client has set or the servers default language
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "IsClientEnabled"></a>
+    <strong>IsClientEnabled&nbsp;(client)</strong>
+    </dt>
+    <dd>
+    Checks if a client is running SparkMod client-side
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">client</span>
+            <span class="types"><span class="type">ServerClient</span></span>
+         the target client</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><span class="type">boolean</span></span>
+        true if the clients game is running SparkMod
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetClientTeam"></a>
+    <strong>GetClientTeam&nbsp;(target)</strong>
+    </dt>
+    <dd>
+    Returns the targets current team index
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">ServerClient</span> or <span class="type">Player</span></span>
+         the target client or player</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><span class="type">number</span></span>
+        the targets current team number
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetTeamName"></a>
+    <strong>GetTeamName&nbsp;(team_index)</strong>
+    </dt>
+    <dd>
+    Returns a lower case NS2 team name for the given team index
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">team_index</span>
+            <span class="types"><span class="type">int</span></span>
+         the index of a NS2 team</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "JoinTeam"></a>
+    <strong>JoinTeam&nbsp;(target, team_number)</strong>
+    </dt>
+    <dd>
+    Joins a target to a team
+ Joins a player to a team and sets clients[client].moving_user_to_team to the
+ team number so that you can allow the join if you are using an OnJoinTeam forward
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">ServerClient</span> or <span class="type">Player</span></span>
+         the target client or player</li>
+        <li><span class="parameter">team_number</span>
+            <span class="types"><span class="type">number</span></span>
+         the team number</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "JoinRandomTeam"></a>
+    <strong>JoinRandomTeam&nbsp;(target)</strong>
+    </dt>
+    <dd>
+    Joins a target to a random team
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">ServerClient</span> or <span class="type">Player</span></span>
+         the target client or player</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetClientOrigin"></a>
+    <strong>GetClientOrigin&nbsp;(target)</strong>
+    </dt>
+    <dd>
+    Gets a target current origin
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">ServerClient</span> or <span class="type">Player</span></span>
+         the target client or player</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        a vector containing the current origin of the target
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetClientTechId"></a>
+    <strong>GetClientTechId&nbsp;(target)</strong>
+    </dt>
+    <dd>
+    Gets a clients tech id
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">ServerClient</span> or <span class="type">Player</span></span>
+         the target client or player</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><span class="type">number</span></span>
+        the targets tech id
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "IsClientInGame"></a>
+    <strong>IsClientInGame&nbsp;(target)</strong>
+    </dt>
+    <dd>
+    Checks if the target is still on the server
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">ServerClient</span> or <span class="type">Player</span></span>
+         the target client or player</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><span class="type">boolean</span></span>
+        true if the target is still on the server
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "IsClientAlive"></a>
+    <strong>IsClientAlive&nbsp;(target)</strong>
+    </dt>
+    <dd>
+    Checks if a player is alive
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">ServerClient</span> or <span class="type">Player</span></span>
+         the target client or player</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><span class="type">boolean</span></span>
+        true if the target is alive
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "IsPlayerAlive"></a>
+    <strong>IsPlayerAlive&nbsp;(target)</strong>
+    </dt>
+    <dd>
+    SourceMod compatible alias for IsClientAlive
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">ServerClient</span> or <span class="type">Player</span></span>
+         the target client or player</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><span class="type">true</span></span>
+        if the target is alive
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "RespawnClientNearby"></a>
+    <strong>RespawnClientNearby&nbsp;(target [, max_range=8])</strong>
+    </dt>
+    <dd>
+    Respawns an alive target in a nearby location which is not near a resource point
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">ServerClient</span> or <span class="type">Player</span></span>
+         the target client or player</li>
+        <li><span class="parameter">max_range</span>
+            <span class="types"><span class="type">number</span></span>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ClientCommand"></a>
+    <strong>ClientCommand&nbsp;(target, format [, ...])</strong>
+    </dt>
+    <dd>
+    Executes a console command on a client
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">ServerClient</span> or <span class="type">Player</span></span>
+         the target client or player</li>
+        <li><span class="parameter">format</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         a string to be formatted</li>
+        <li><span class="parameter">...</span>
+         any arguments to be formatted</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "SetUserIdCookie"></a>
+    <strong>SetUserIdCookie&nbsp;(user_id, cookie_name, value)</strong>
+    </dt>
+    <dd>
+    Sets a cookie for a user from a steam id
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">user_id</span>
+            <span class="types"><span class="type">number</span></span>
+         the steam id of the user</li>
+        <li><span class="parameter">cookie_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the cookie</li>
+        <li><span class="parameter">value</span>
+         the value to set</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "SetClientCookie"></a>
+    <strong>SetClientCookie&nbsp;(client, cookie_name, value)</strong>
+    </dt>
+    <dd>
+    Sets a cookie for a connected client
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">client</span>
+            <span class="types"><span class="type">ServerClient</span></span>
+         the connected client</li>
+        <li><span class="parameter">cookie_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the cookie</li>
+        <li><span class="parameter">value</span>
+         the value to set</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetUserIdRawCookie"></a>
+    <strong>GetUserIdRawCookie&nbsp;(user_id, cookie_name)</strong>
+    </dt>
+    <dd>
+    Gets a raw cookie table for a specific cookie beloning to a user from a steam id
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">user_id</span>
+            <span class="types"><span class="type">number</span></span>
+         the steam id of the user</li>
+        <li><span class="parameter">cookie_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the cookie</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        the cookie value
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetUserIdCookie"></a>
+    <strong>GetUserIdCookie&nbsp;(user_id, cookie_name)</strong>
+    </dt>
+    <dd>
+    Gets a cookie value for a user from a steam id
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">user_id</span>
+            <span class="types"><span class="type">number</span></span>
+         the steam id of the user</li>
+        <li><span class="parameter">cookie_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the cookie</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        the cookie value
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetClientCookie"></a>
+    <strong>GetClientCookie&nbsp;(client, cookie_name)</strong>
+    </dt>
+    <dd>
+    Gets a cookie value for a connected client
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">client</span>
+            <span class="types"><span class="type">ServerClient</span></span>
+         the connected client</li>
+        <li><span class="parameter">cookie_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the cookie</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        the cookie value
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetClientCookieTime"></a>
+    <strong>GetClientCookieTime&nbsp;(client, cookie_name)</strong>
+    </dt>
+    <dd>
+    Gets the time a cookies value was last changed for a user from a steam id
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">client</span>
+            <span class="types"><span class="type">ServerClient</span></span>
+         the connected client</li>
+        <li><span class="parameter">cookie_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the cookie</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><span class="type">float</span></span>
+        the time that the cookies value last changed
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "CommandAlias"></a>
+    <strong>CommandAlias&nbsp;(command_name, alias_name)</strong>
+    </dt>
+    <dd>
+    Registers an alias for a registered client or admin command
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">command_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the registered command name</li>
+        <li><span class="parameter">alias_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the alias you want to register</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PrintToScreen"></a>
+    <strong>PrintToScreen&nbsp;(target, x, y, text, duration, color [, tag])</strong>
+    </dt>
+    <dd>
+    Prints a text message at a specific location of a targets screen
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">ServerClient</span> or <span class="type">Player</span></span>
+         the target to send the message to</li>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+         a ratio between 0 and 1.0 representing the x position on the clients screen</li>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+         a ratio between 0 and 1.0 representing the y position on the clients screen</li>
+        <li><span class="parameter">text</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the text message you want to display</li>
+        <li><span class="parameter">duration</span>
+            <span class="types"><span class="type">number</span></span>
+         the amount of seconds the message should be visible for</li>
+        <li><span class="parameter">color</span>
+            <span class="types"><span class="type">tab</span></span>
+         the RGB color of the text</li>
+        <li><span class="parameter">tag</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         a tag to associate with the message which can be used to remove it</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PrintToScreenAll"></a>
+    <strong>PrintToScreenAll&nbsp;(x, y, text, duration, color [, tag])</strong>
+    </dt>
+    <dd>
+    Prints a text message at a specific location of all connected players screens
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+         a ratio between 0 and 1.0 representing the x position on the clients screen</li>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+         a ratio between 0 and 1.0 representing the y position on the clients screen</li>
+        <li><span class="parameter">text</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the text message you want to display</li>
+        <li><span class="parameter">duration</span>
+            <span class="types"><span class="type">number</span></span>
+         the amount of seconds the message should be visible for</li>
+        <li><span class="parameter">color</span>
+            <span class="types"><span class="type">tab</span></span>
+         the RGB color of the text</li>
+        <li><span class="parameter">tag</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         a tag to associate with the message which can be used to remove it</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PrintCenterText"></a>
+    <strong>PrintCenterText&nbsp;(target, format [, ...])</strong>
+    </dt>
+    <dd>
+    Prints a text message to the center of a targets screen
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">ServerClient</span> or <span class="type">Player</span></span>
+         the target to send the message to</li>
+        <li><span class="parameter">format</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         a string to format</li>
+        <li><span class="parameter">...</span>
+         any arguments to format</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PrintCenterTextAll"></a>
+    <strong>PrintCenterTextAll&nbsp;(format [, ...])</strong>
+    </dt>
+    <dd>
+    Prints a text message to the center of all connected players screens
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">format</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         a string to format</li>
+        <li><span class="parameter">...</span>
+         any arguments to format</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ArgCount"></a>
+    <strong>ArgCount&nbsp;(...)</strong>
+    </dt>
+    <dd>
+    Counts the number of arguments given
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         the arguments to count</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><span class="type">number</span></span>
+        the number of arguments
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "ArgString"></a>
+    <strong>ArgString&nbsp;(...)</strong>
+    </dt>
+    <dd>
+    Joins the arguments given together with spaces
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         the arguments to join</li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+          <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        the arguments given joined together with spaces
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.3.11</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

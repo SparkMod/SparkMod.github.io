@@ -1,0 +1,546 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>SparkMod Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>SparkMod</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul>
+  <li><strong>plugin_base</strong></li>
+  <li><a href="../modules/plugin_clients.html">plugin_clients</a></li>
+  <li><a href="../modules/plugin_helpers.html">plugin_helpers</a></li>
+  <li><a href="../modules/plugin_scheduler.html">plugin_scheduler</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>plugin_base</code></h1>
+
+<p>SparkMod shared plugin base.</p>
+<p>
+ These functions are available to both server and client-side plugins</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Format">Format&nbsp;(format)</a></td>
+	<td class="summary">Alias for string.format, functionality is extended for server plugins</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Puts">Puts&nbsp;(format)</a></td>
+	<td class="summary">Prints a string to the server console prepended with the plugins name</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Now">Now&nbsp;()</a></td>
+	<td class="summary">Alias for Shared.GetTime()</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Requires">Requires&nbsp;(...)</a></td>
+	<td class="summary">Requires other plugins to be loaded before initializing this plugin
+ Requires other plugins to load before loading this plugin.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#RegPluginLibrary">RegPluginLibrary&nbsp;(name)</a></td>
+	<td class="summary">Registers a global name for the plugin
+ Must be used in the plugin body.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#NetworkMessageField">NetworkMessageField&nbsp;(message_name, name, type, default_value)</a></td>
+	<td class="summary">Registers a network message field, creates the network message if it does not already exist</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#NetworkMessage">NetworkMessage&nbsp;(message_name, func)</a></td>
+	<td class="summary">Registers or extends a network message
+ The default_value is used when sending a message missing the field,
+ it will be used even if the server plugin is unloaded at runtime</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#HookFunctionPre">HookFunctionPre&nbsp;(method_name, callback)</a></td>
+	<td class="summary">Pre-hooks a function and calls the callback every time the function is about to be called
+ Varargs are passed to the callback as a table.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#HookFunction">HookFunction&nbsp;(method_name, callback)</a></td>
+	<td class="summary">Post-hooks a function and calls the callback every time the function has been called
+ Varargs are passed to the callback as a table.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#HookGamerulesFunctionPre">HookGamerulesFunctionPre&nbsp;(method_name, callback)</a></td>
+	<td class="summary">Pre-hooks a Gamerules function and calls the callback every time the function is about to be called
+ Varargs are passed to the callback as a table.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#HookGamerulesFunction">HookGamerulesFunction&nbsp;(method_name, callback)</a></td>
+	<td class="summary">Post-hooks a Gamerules function and calls the callback every time the function has been called
+ Varargs are passed to the callback as a table.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#HookNS2GamerulesFunctionPre">HookNS2GamerulesFunctionPre&nbsp;(method_name, callback)</a></td>
+	<td class="summary">Pre-hooks a NS2Gamerules function and calls the callback every time the function is about to be called
+ Varargs are passed to the callback as a table.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#HookNS2GamerulesFunction">HookNS2GamerulesFunction&nbsp;(method_name, callback)</a></td>
+	<td class="summary">Post-hooks a NS2Gamerules function and calls the callback every time the function has been called
+ Varargs are passed to the callback as a table.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#InjectIntoScope">InjectIntoScope&nbsp;(..., function)</a></td>
+	<td class="summary">Injects a function into the scope of other functions so that you can use locals they reference</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#HookNetworkMessage">HookNetworkMessage&nbsp;(message_name, callback)</a></td>
+	<td class="summary">Hooks a network message and calls the callback when the network message is received</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#SendNetworkMessage">SendNetworkMessage&nbsp;( [target], message_name, message)</a></td>
+	<td class="summary">Sends a network message to one or all connected players</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#RespondToNetworkMessage">RespondToNetworkMessage&nbsp;(message_name, callback)</a></td>
+	<td class="summary">Hooks a network message and responds with the same message</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "Format"></a>
+    <strong>Format&nbsp;(format)</strong>
+    </dt>
+    <dd>
+    Alias for string.format, functionality is extended for server plugins
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">format</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the string to format</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Puts"></a>
+    <strong>Puts&nbsp;(format)</strong>
+    </dt>
+    <dd>
+    Prints a string to the server console prepended with the plugins name
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">format</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the string to format</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Now"></a>
+    <strong>Now&nbsp;()</strong>
+    </dt>
+    <dd>
+    Alias for Shared.GetTime()
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Requires"></a>
+    <strong>Requires&nbsp;(...)</strong>
+    </dt>
+    <dd>
+    Requires other plugins to be loaded before initializing this plugin
+ Requires other plugins to load before loading this plugin.  Must be used in the plugin
+ body. In the case of circular dependencies, plugins will be loaded before OnLoaded is
+ called in this plugin but OnLoaded may not have yet been called in the dependent plugins.
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "RegPluginLibrary"></a>
+    <strong>RegPluginLibrary&nbsp;(name)</strong>
+    </dt>
+    <dd>
+    Registers a global name for the plugin
+ Must be used in the plugin body.  You can also use `library_name = "YourPluginName"`
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the global variable to be used to refer to your plugin</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "NetworkMessageField"></a>
+    <strong>NetworkMessageField&nbsp;(message_name, name, type, default_value)</strong>
+    </dt>
+    <dd>
+    Registers a network message field, creates the network message if it does not already exist
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the network message</li>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the message field</li>
+        <li><span class="parameter">type</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the type of the message field</li>
+        <li><span class="parameter">default_value</span>
+         used when sending the message missing this field, will be used even if the server plugin is unloaded at runtime</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "NetworkMessage"></a>
+    <strong>NetworkMessage&nbsp;(message_name, func)</strong>
+    </dt>
+    <dd>
+    Registers or extends a network message
+ The default_value is used when sending a message missing the field,
+ it will be used even if the server plugin is unloaded at runtime
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        </li>
+        <li><span class="parameter">func</span>
+            <span class="types"><span class="type">func</span></span>
+         an inline function</li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"> NetworkMessage(<span class="string">"SM_SetKv"</span>, <span class="keyword">function</span>()
+     Field(<span class="string">"key"</span>, <span class="string">"string (64)"</span>, <span class="string">""</span>)
+     Field(<span class="string">"value"</span>, <span class="string">"string (128)"</span>, <span class="string">""</span>)
+ <span class="keyword">end</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "HookFunctionPre"></a>
+    <strong>HookFunctionPre&nbsp;(method_name, callback)</strong>
+    </dt>
+    <dd>
+    Pre-hooks a function and calls the callback every time the function is about to be called
+ Varargs are passed to the callback as a table.  Other plugins can use Pre/post hook forwards to hook this kind of hook.
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">method_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the function to be hooked</li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">func</span></span>
+         the callback which will be called before the hooked function is called</li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"> HookFunctionPre(<span class="string">"Server.DestroyEntity"</span>, <span class="keyword">function</span>(entity)
+     Puts(<span class="string">"Entity is being destoyed: %s"</span>, entity:GetClassName())
+ <span class="keyword">end</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "HookFunction"></a>
+    <strong>HookFunction&nbsp;(method_name, callback)</strong>
+    </dt>
+    <dd>
+    Post-hooks a function and calls the callback every time the function has been called
+ Varargs are passed to the callback as a table.  Other plugins can use Pre/post hook forwards to hook this kind of hook.
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">method_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the function to be hooked</li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">func</span></span>
+         the callback which will be called after the hooked function is called</li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"> HookFunction(<span class="string">"Server.DestroyEntity"</span>, <span class="keyword">function</span>(entity)
+     Puts <span class="string">"An entity has been destoyed"</span>
+ <span class="keyword">end</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "HookGamerulesFunctionPre"></a>
+    <strong>HookGamerulesFunctionPre&nbsp;(method_name, callback)</strong>
+    </dt>
+    <dd>
+    Pre-hooks a Gamerules function and calls the callback every time the function is about to be called
+ Varargs are passed to the callback as a table.  Other plugins can use Pre/post hook forwards to hook this kind of hook.
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">method_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the Gamerules function to be hooked</li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">func</span></span>
+         the callback which will be called before the hooked Gamerules function is called</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "HookGamerulesFunction"></a>
+    <strong>HookGamerulesFunction&nbsp;(method_name, callback)</strong>
+    </dt>
+    <dd>
+    Post-hooks a Gamerules function and calls the callback every time the function has been called
+ Varargs are passed to the callback as a table.  Other plugins can use Pre/post hook forwards to hook this kind of hook.
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">method_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the Gamerules function to be hooked</li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">func</span></span>
+         the callback which will be called after the hooked Gamerules function is called</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "HookNS2GamerulesFunctionPre"></a>
+    <strong>HookNS2GamerulesFunctionPre&nbsp;(method_name, callback)</strong>
+    </dt>
+    <dd>
+    Pre-hooks a NS2Gamerules function and calls the callback every time the function is about to be called
+ Varargs are passed to the callback as a table.  Other plugins can use Pre/post hook forwards to hook this kind of hook.
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">method_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the NS2Gamerules function to be hooked</li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">func</span></span>
+         the callback which will be called before the hooked NS2Gamerules function is called</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "HookNS2GamerulesFunction"></a>
+    <strong>HookNS2GamerulesFunction&nbsp;(method_name, callback)</strong>
+    </dt>
+    <dd>
+    Post-hooks a NS2Gamerules function and calls the callback every time the function has been called
+ Varargs are passed to the callback as a table.  Other plugins can use Pre/post hook forwards to hook this kind of hook.
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">method_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the NS2Gamerules function to be hooked</li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">func</span></span>
+         the callback which will be called after the hooked NS2Gamerules function is called</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "InjectIntoScope"></a>
+    <strong>InjectIntoScope&nbsp;(..., function)</strong>
+    </dt>
+    <dd>
+    Injects a function into the scope of other functions so that you can use locals they reference
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+         any number of functions referencing locals you want to use</li>
+        <li><span class="parameter">function</span>
+            <span class="types"><span class="type">int</span> or <a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         to share scope with other functions, will not be called if passed as a string</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "HookNetworkMessage"></a>
+    <strong>HookNetworkMessage&nbsp;(message_name, callback)</strong>
+    </dt>
+    <dd>
+    Hooks a network message and calls the callback when the network message is received
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the message</li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">func</span></span>
+         the callback function</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "SendNetworkMessage"></a>
+    <strong>SendNetworkMessage&nbsp;( [target], message_name, message)</strong>
+    </dt>
+    <dd>
+    Sends a network message to one or all connected players
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">ServerClient</span> or <span class="type">Player</span></span>
+         a single player to send the network message to</li>
+        <li><span class="parameter">message_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the name of the network message</li>
+        <li><span class="parameter">message</span>
+            <span class="types"><span class="type">tab</span></span>
+         the network message</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "RespondToNetworkMessage"></a>
+    <strong>RespondToNetworkMessage&nbsp;(message_name, callback)</strong>
+    </dt>
+    <dd>
+    Hooks a network message and responds with the same message
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message_name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the network message name</li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">func</span></span>
+         a function that is passed the received message and returns the response message</li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.3.11</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
