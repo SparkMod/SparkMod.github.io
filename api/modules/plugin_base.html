@@ -75,6 +75,18 @@
 	<td class="summary">Gets the current system time in seconds</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#Persistent">Persistent&nbsp;(tbl)</a></td>
+	<td class="summary">Declares variables that will persist between map changes, plugin reloads and server restarts.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Store">Store&nbsp;( [name])</a></td>
+	<td class="summary">Saves persistent variables to storage</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Restore">Restore&nbsp;( [name])</a></td>
+	<td class="summary">Restores persistent variables from storage</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#Requires">Requires&nbsp;(...)</a></td>
 	<td class="summary">Requires other plugins to be loaded before initializing this plugin.</td>
 	</tr>
@@ -225,6 +237,69 @@
           <span class="types"><span class="type">number</span></span>
         the current system timestamp in seconds
     </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Persistent"></a>
+    <strong>Persistent&nbsp;(tbl)</strong>
+    </dt>
+    <dd>
+    Declares variables that will persist between map changes, plugin reloads and server restarts.
+ Persistent variables are saved to a file when the plugin is unloaded or if Store() is called.
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tbl</span>
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"> Persistent {
+    recent_map = { }
+}</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Store"></a>
+    <strong>Store&nbsp;( [name])</strong>
+    </dt>
+    <dd>
+    Saves persistent variables to storage
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         a variables name if you only want to save a single persistent variable</li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Restore"></a>
+    <strong>Restore&nbsp;( [name])</strong>
+    </dt>
+    <dd>
+    Restores persistent variables from storage
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         a variables name if you only want to restore a single persistent variable</li>
+    </ul>
+
 
 
 
